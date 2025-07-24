@@ -6,6 +6,7 @@
   <div v-if="listas.length > 0">
     <div class="cards-container">
       <div v-for="(lista, idx) in listas.slice(-3)" :key="idx" class="card">
+        <button class="btn-delete-list" @click="removerLista(idx)">🗑️</button>
         <h2>{{ lista.nome }}</h2>
         <p class="preview-descricao">{{ lista.descricao }}</p>
         <ul>
@@ -15,10 +16,8 @@
             </span>
           </li>
         </ul>
+        <button class="btn-action" @click="abrirLista(idx)">Abrir lista</button>
       </div>
-
-      <button @click="abrirLista(idx)">Abrir lista</button>
-      <button @click="removerLista(idx)">Apagar lista</button>
     </div>
   </div>
 
@@ -132,15 +131,15 @@ export default {
 <style scoped >
 
 .cards-container {
-  display: flex;
-  gap: 16px;         
-  flex-wrap: wrap;    
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;   
 }
 .card {
   background: #f0f0f0 ;          /* azul bem suave */
   border-radius: 8px;
   padding: 16px;
-  flex: 1;
+  position: relative;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .card ul {
@@ -150,6 +149,38 @@ export default {
 }
 .card li {
   margin-bottom: 4px;
+}
+.btn-action {
+  background: white;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.btn-delete-list {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: 2px solid #e74c3c;    /* borda vermelha */
+  border-radius: 50%;            /* formato circular */
+  padding: 6px;                  /* espaço interno */
+  font-size: 1.2rem;
+  color: #e74c3c;                /* ícone vermelho */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-delete-list:hover {
+  background: rgb(231, 76, 60, 0.1);
+  transform: scale(1.2);
 }
 
 </style>
